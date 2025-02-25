@@ -17,7 +17,7 @@ export class LocusController {
         @Query('role') role?: string,
         @Query('page') page?: string,
         @Query('limit') limit?: string,
-        @Query('id') id?: string,
+        @Query('id') id?: number,
         @Query('assemblyId') assemblyId?: string,
         @Query('regionId') regionId?: string,
         @Query('membershipStatus') membershipStatus?: string,
@@ -27,13 +27,13 @@ export class LocusController {
         const pageNumber = page ? parseInt(page, 10) : 1;
         const limitNumber = limit ? parseInt(limit, 10) : 10;
 
-        const idNumber = id ? parseInt(id, 10) : undefined;
+        const idNumber = id ? parseInt(String(id), 10) : undefined;
 
         const assemblyIdString = assemblyId ?? undefined;
 
         const regionIdArray = regionId ? regionId.split(',').map(id => parseInt(id, 10)) : undefined;
 
-        const sortFields = sortBy ? sortBy.split(',') : undefined;
+        const sortFields = sortBy ? sortBy.split(',') : ["id", "assemblyId"];
 
         const sideloadingEnum = sideloading && Object.values(SideloadingOption).includes(sideloading as SideloadingOption)
             ? (sideloading as SideloadingOption)
